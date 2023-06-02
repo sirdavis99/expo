@@ -9,6 +9,7 @@
 ### 🐛 Bug fixes
 
 - Fix bug preventing non-standard xcode projects from running with `npx expo run:ios`. ([#23831](https://github.com/expo/expo/pull/23831) by [@EvanBacon](https://github.com/EvanBacon))
+- Updated `npx expo whoami` output to show not only currently signed in user, but also accounts they have access to. ([#22733](https://github.com/expo/expo/pull/22733) by [@sjchmiela](https://github.com/sjchmiela))
 
 ### 💡 Others
 
