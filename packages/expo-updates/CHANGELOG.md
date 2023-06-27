@@ -8,6 +8,8 @@
 
 ### 🐛 Bug fixes
 
+- Bare update manifest non-nullability parity. ([#23166](https://github.com/expo/expo/pull/23166) by [@wschurman](https://github.com/wschurman))
+
 ### 💡 Others
 
 ## 0.19.1 — 2023-08-02
