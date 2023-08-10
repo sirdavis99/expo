@@ -8,7 +8,26 @@
 
 ### 🐛 Bug fixes
 
+- Fixed flash is not enabled during recordings. ([#23776](https://github.com/expo/expo/pull/23776) by [@tszheichoi](https://github.com/tszheichoi))
+- On iOS, fix dead frames when starting a video recording. ([#22037](https://github.com/expo/expo/pull/22037) by [@alanjhughes](https://github.com/alanjhughes))
+
 ### 💡 Others
+
+## 13.5.1 — 2023-08-02
+
+_This version does not introduce any user-facing changes._
+
+## 13.5.0 — 2023-07-28
+
+### 🐛 Bug fixes
+
+- Fixed issue with checking camera/microphone permissions in Firefox. ([#22855](https://github.com/expo/expo/pull/22855) by [@loganrosen](https://github.com/loganrosen))
+
+## 13.4.2 - 2023-07-04
+
+### 🐛 Bug fixes
+
+- Fix crash when onBarCodeScanned or onFacesDetected callback is removed. ([#23223](https://github.com/expo/expo/pull/23223) by [@thespacemanatee](https://github.com/thespacemanatee))
 
 ## 13.4.1 — 2023-06-28
 

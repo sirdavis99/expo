@@ -10,6 +10,18 @@
 
 ### 💡 Others
 
+- Migrate to Expo CLI. ([#23806](https://github.com/expo/expo/pull/23806) by [@EvanBacon](https://github.com/EvanBacon))
+
+## 3.0.0 — 2023-08-02
+
+_This version does not introduce any user-facing changes._
+
+## 2.4.7 — 2023-07-26
+
+### 🐛 Bug fixes
+
+- Fixed compatibility with the Reanimated 3.4.0 on iOS. ([#23726](https://github.com/expo/expo/pull/23726) by [@piaskowyk](https://github.com/piaskowyk))
+
 ## 2.4.2 — 2023-06-28
 
 _This version does not introduce any user-facing changes._

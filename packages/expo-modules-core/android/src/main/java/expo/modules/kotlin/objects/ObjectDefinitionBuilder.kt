@@ -25,7 +25,10 @@ import expo.modules.kotlin.functions.SyncFunctionComponent
 import expo.modules.kotlin.jni.JavaScriptModuleObject
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinitionBuilder
+import expo.modules.kotlin.types.Enumerable
 import expo.modules.kotlin.types.toAnyType
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.typeOf
 
 /**
@@ -33,7 +36,9 @@ import kotlin.reflect.typeOf
  */
 open class ObjectDefinitionBuilder {
   private var constantsProvider = { emptyMap<String, Any?>() }
-  private var eventsDefinition: EventsDefinition? = null
+
+  @PublishedApi
+  internal var eventsDefinition: EventsDefinition? = null
 
   @PublishedApi
   internal var syncFunctions = mutableMapOf<String, SyncFunctionComponent>()
@@ -111,7 +116,7 @@ open class ObjectDefinitionBuilder {
     name: String,
     crossinline body: (p0: P0) -> R
   ): SyncFunctionComponent {
-    return SyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType())) { body(it[0] as P0) }.also {
+    return SyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>())) { body(it[0] as P0) }.also {
       syncFunctions[name] = it
     }
   }
@@ -120,7 +125,7 @@ open class ObjectDefinitionBuilder {
     name: String,
     crossinline body: (p0: P0, p1: P1) -> R
   ): SyncFunctionComponent {
-    return SyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType())) { body(it[0] as P0, it[1] as P1) }.also {
+    return SyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>())) { body(it[0] as P0, it[1] as P1) }.also {
       syncFunctions[name] = it
     }
   }
@@ -129,7 +134,7 @@ open class ObjectDefinitionBuilder {
     name: String,
     crossinline body: (p0: P0, p1: P1, p2: P2) -> R
   ): SyncFunctionComponent {
-    return SyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2) }.also {
+    return SyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>())) { body(it[0] as P0, it[1] as P1, it[2] as P2) }.also {
       syncFunctions[name] = it
     }
   }
@@ -138,7 +143,7 @@ open class ObjectDefinitionBuilder {
     name: String,
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3) -> R
   ): SyncFunctionComponent {
-    return SyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3) }.also {
+    return SyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3) }.also {
       syncFunctions[name] = it
     }
   }
@@ -147,7 +152,7 @@ open class ObjectDefinitionBuilder {
     name: String,
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) -> R
   ): SyncFunctionComponent {
-    return SyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4) }.also {
+    return SyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4) }.also {
       syncFunctions[name] = it
     }
   }
@@ -156,7 +161,7 @@ open class ObjectDefinitionBuilder {
     name: String,
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5) -> R
   ): SyncFunctionComponent {
-    return SyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType(), typeOf<P5>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5) }.also {
+    return SyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>(), { typeOf<P5>() }.toAnyType<P5>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5) }.also {
       syncFunctions[name] = it
     }
   }
@@ -165,7 +170,7 @@ open class ObjectDefinitionBuilder {
     name: String,
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) -> R
   ): SyncFunctionComponent {
-    return SyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType(), typeOf<P5>().toAnyType(), typeOf<P6>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5, it[6] as P6) }.also {
+    return SyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>(), { typeOf<P5>() }.toAnyType<P5>(), { typeOf<P6>() }.toAnyType<P6>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5, it[6] as P6) }.also {
       syncFunctions[name] = it
     }
   }
@@ -174,7 +179,7 @@ open class ObjectDefinitionBuilder {
     name: String,
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) -> R
   ): SyncFunctionComponent {
-    return SyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType(), typeOf<P5>().toAnyType(), typeOf<P6>().toAnyType(), typeOf<P7>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5, it[6] as P6, it[7] as P7) }.also {
+    return SyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>(), { typeOf<P5>() }.toAnyType<P5>(), { typeOf<P6>() }.toAnyType<P6>(), { typeOf<P7>() }.toAnyType<P7>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5, it[6] as P6, it[7] as P7) }.also {
       syncFunctions[name] = it
     }
   }
@@ -205,7 +210,7 @@ open class ObjectDefinitionBuilder {
     return if (P0::class == Promise::class) {
       AsyncFunctionWithPromiseComponent(name, arrayOf()) { _, promise -> body(promise as P0) }
     } else {
-      AsyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType())) { body(it[0] as P0) }
+      AsyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>())) { body(it[0] as P0) }
     }.also {
       asyncFunctions[name] = it
     }
@@ -216,9 +221,9 @@ open class ObjectDefinitionBuilder {
     crossinline body: (p0: P0, p1: P1) -> R
   ): AsyncFunction {
     return if (P1::class == Promise::class) {
-      AsyncFunctionWithPromiseComponent(name, arrayOf(typeOf<P0>().toAnyType())) { args, promise -> body(args[0] as P0, promise as P1) }
+      AsyncFunctionWithPromiseComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>())) { args, promise -> body(args[0] as P0, promise as P1) }
     } else {
-      AsyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType())) { body(it[0] as P0, it[1] as P1) }
+      AsyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>())) { body(it[0] as P0, it[1] as P1) }
     }.also {
       asyncFunctions[name] = it
     }
@@ -229,9 +234,9 @@ open class ObjectDefinitionBuilder {
     crossinline body: (p0: P0, p1: P1, p2: P2) -> R
   ): AsyncFunction {
     return if (P2::class == Promise::class) {
-      AsyncFunctionWithPromiseComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType())) { args, promise -> body(args[0] as P0, args[1] as P1, promise as P2) }
+      AsyncFunctionWithPromiseComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>())) { args, promise -> body(args[0] as P0, args[1] as P1, promise as P2) }
     } else {
-      AsyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2) }
+      AsyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>())) { body(it[0] as P0, it[1] as P1, it[2] as P2) }
     }.also {
       asyncFunctions[name] = it
     }
@@ -242,9 +247,9 @@ open class ObjectDefinitionBuilder {
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3) -> R
   ): AsyncFunction {
     return if (P3::class == Promise::class) {
-      AsyncFunctionWithPromiseComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, promise as P3) }
+      AsyncFunctionWithPromiseComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, promise as P3) }
     } else {
-      AsyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3) }
+      AsyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3) }
     }.also {
       asyncFunctions[name] = it
     }
@@ -255,9 +260,9 @@ open class ObjectDefinitionBuilder {
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4) -> R
   ): AsyncFunction {
     return if (P4::class == Promise::class) {
-      AsyncFunctionWithPromiseComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, args[3] as P3, promise as P4) }
+      AsyncFunctionWithPromiseComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, args[3] as P3, promise as P4) }
     } else {
-      AsyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4) }
+      AsyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4) }
     }.also {
       asyncFunctions[name] = it
     }
@@ -268,9 +273,9 @@ open class ObjectDefinitionBuilder {
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5) -> R
   ): AsyncFunction {
     return if (P5::class == Promise::class) {
-      AsyncFunctionWithPromiseComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, args[3] as P3, args[4] as P4, promise as P5) }
+      AsyncFunctionWithPromiseComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, args[3] as P3, args[4] as P4, promise as P5) }
     } else {
-      AsyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType(), typeOf<P5>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5) }
+      AsyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>(), { typeOf<P5>() }.toAnyType<P5>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5) }
     }.also {
       asyncFunctions[name] = it
     }
@@ -281,9 +286,9 @@ open class ObjectDefinitionBuilder {
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6) -> R
   ): AsyncFunction {
     return if (P6::class == Promise::class) {
-      AsyncFunctionWithPromiseComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType(), typeOf<P5>().toAnyType())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, args[3] as P3, args[4] as P4, args[5] as P5, promise as P6) }
+      AsyncFunctionWithPromiseComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>(), { typeOf<P5>() }.toAnyType<P5>())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, args[3] as P3, args[4] as P4, args[5] as P5, promise as P6) }
     } else {
-      AsyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType(), typeOf<P5>().toAnyType(), typeOf<P6>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5, it[6] as P6) }
+      AsyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>(), { typeOf<P5>() }.toAnyType<P5>(), { typeOf<P6>() }.toAnyType<P6>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5, it[6] as P6) }
     }.also {
       asyncFunctions[name] = it
     }
@@ -294,9 +299,9 @@ open class ObjectDefinitionBuilder {
     crossinline body: (p0: P0, p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7) -> R
   ): AsyncFunction {
     return if (P7::class == Promise::class) {
-      AsyncFunctionWithPromiseComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType(), typeOf<P5>().toAnyType(), typeOf<P6>().toAnyType())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, args[3] as P3, args[4] as P4, args[5] as P5, args[6] as P6, promise as P7) }
+      AsyncFunctionWithPromiseComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>(), { typeOf<P5>() }.toAnyType<P5>(), { typeOf<P6>() }.toAnyType<P6>())) { args, promise -> body(args[0] as P0, args[1] as P1, args[2] as P2, args[3] as P3, args[4] as P4, args[5] as P5, args[6] as P6, promise as P7) }
     } else {
-      AsyncFunctionComponent(name, arrayOf(typeOf<P0>().toAnyType(), typeOf<P1>().toAnyType(), typeOf<P2>().toAnyType(), typeOf<P3>().toAnyType(), typeOf<P4>().toAnyType(), typeOf<P5>().toAnyType(), typeOf<P6>().toAnyType(), typeOf<P7>().toAnyType())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5, it[6] as P6, it[7] as P7) }
+      AsyncFunctionComponent(name, arrayOf({ typeOf<P0>() }.toAnyType<P0>(), { typeOf<P1>() }.toAnyType<P1>(), { typeOf<P2>() }.toAnyType<P2>(), { typeOf<P3>() }.toAnyType<P3>(), { typeOf<P4>() }.toAnyType<P4>(), { typeOf<P5>() }.toAnyType<P5>(), { typeOf<P6>() }.toAnyType<P6>(), { typeOf<P7>() }.toAnyType<P7>())) { body(it[0] as P0, it[1] as P1, it[2] as P2, it[3] as P3, it[4] as P4, it[5] as P5, it[6] as P6, it[7] as P7) }
     }.also {
       asyncFunctions[name] = it
     }
@@ -319,6 +324,28 @@ open class ObjectDefinitionBuilder {
   @JvmName("EventsWithArray")
   fun Events(events: Array<String>) {
     eventsDefinition = EventsDefinition(events)
+  }
+
+  inline fun <reified T> Events() where T : Enumerable, T : Enum<T> {
+    val primaryConstructor = T::class.primaryConstructor
+    val events = if (primaryConstructor?.parameters?.size == 1) {
+      val parameterName = primaryConstructor.parameters.first().name
+
+      val parameterProperty = T::class
+        .declaredMemberProperties
+        .find { it.name == parameterName }
+      requireNotNull(parameterProperty) { "Cannot find a property for $parameterName parameter" }
+      require(parameterProperty.returnType.classifier == String::class) { "The enum parameter has to be a string." }
+      enumValues<T>().map {
+        parameterProperty.get(it) as String
+      }
+    } else {
+      enumValues<T>().map {
+        it.name
+      }
+    }
+
+    eventsDefinition = EventsDefinition(events.toTypedArray())
   }
 
   /**

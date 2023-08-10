@@ -6,9 +6,15 @@
 
 ### 🎉 New features
 
+- Automatically generate `moduleNameMapping` from `tsconfig.json` when available. ([#23442](https://github.com/expo/expo/pull/23442) by [@byCedric](https://github.com/byCedric))
+
 ### 🐛 Bug fixes
 
 ### 💡 Others
+
+## 50.0.0-alpha.0 — 2023-07-28
+
+_This version does not introduce any user-facing changes._
 
 ## 49.0.0 — 2023-06-28
 
