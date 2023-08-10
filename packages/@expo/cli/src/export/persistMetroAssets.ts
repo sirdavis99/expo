@@ -107,12 +107,6 @@ function getAssetLocalPath(
   const fileName = `${asset.name + suffix}.${asset.type}`;
 
   const adjustedHttpServerLocation = stripAssetPrefix(asset.httpServerLocation, assetPrefix);
-  console.log(
-    'adjustedHttpServerLocation',
-    adjustedHttpServerLocation,
-    assetPrefix,
-    asset.httpServerLocation
-  );
   return path.join(
     // Assets can have relative paths outside of the project root.
     // Replace `../` with `_` to make sure they don't end up outside of
