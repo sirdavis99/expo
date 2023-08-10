@@ -3,7 +3,7 @@ package versioned.host.exp.exponent
 import expo.modules.application.ApplicationPackage
 import expo.modules.av.AVPackage
 import expo.modules.av.video.VideoViewModule
-import expo.modules.backgroundfetch.BackgroundFetchPackage
+import expo.modules.backgroundfetch.BackgroundFetchModule
 import expo.modules.barcodescanner.BarCodeScannerModule
 import expo.modules.barcodescanner.BarCodeScannerPackage
 import expo.modules.battery.BatteryPackage
@@ -72,7 +72,6 @@ object ExperiencePackagePicker : ModulesProvider {
     AVPackage(),
     ApplicationPackage(),
     BatteryPackage(),
-    BackgroundFetchPackage(),
     BarCodeScannerPackage(),
     CalendarPackage(),
     ConstantsPackage(),
@@ -112,6 +111,7 @@ object ExperiencePackagePicker : ModulesProvider {
   }
 
   override fun getModulesList(): List<Class<out Module>> = listOf(
+    BackgroundFetchModule::class.java,
     BarCodeScannerModule::class.java,
     BlurModule::class.java,
     CameraViewModule::class.java,
