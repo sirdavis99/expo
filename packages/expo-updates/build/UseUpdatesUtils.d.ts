@@ -14,6 +14,7 @@ export type UseUpdatesStateType = {
     lastCheckForUpdateTimeSinceRestart?: Date;
 };
 export declare const updateFromManifest: (manifest: NonNullable<Manifest>) => UpdateInfo;
+export declare const updateFromRollback: (rollbackCommitTime?: Date) => UpdateInfo;
 export declare const defaultUseUpdatesState: UseUpdatesStateType;
 export declare const reduceUpdatesStateFromContext: (updatesState: UseUpdatesStateType, context: UpdatesNativeStateMachineContext) => UseUpdatesStateType;
 //# sourceMappingURL=UseUpdatesUtils.d.ts.map

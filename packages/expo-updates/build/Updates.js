@@ -256,6 +256,10 @@ export async function getNativeStateMachineContextAsync() {
         nativeContext.lastCheckForUpdateTime = new Date(nativeContext.lastCheckForUpdateTimeString);
         delete nativeContext.lastCheckForUpdateTimeString;
     }
+    if (nativeContext.rollbackCommitTimeString) {
+        nativeContext.rollbackCommitTime = new Date(nativeContext.rollbackCommitTimeString);
+        delete nativeContext.rollbackCommitTimeString;
+    }
     return nativeContext;
 }
 //# sourceMappingURL=Updates.js.map

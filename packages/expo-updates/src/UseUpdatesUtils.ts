@@ -45,6 +45,15 @@ export const updateFromManifest: (manifest: NonNullable<Manifest>) => UpdateInfo
   };
 };
 
+export const updateFromRollback: (rollbackCommitTime?: Date) => UpdateInfo = (
+  rollbackCommitTime
+) => ({
+  type: UpdateInfoType.ROLLBACK,
+  createdAt: rollbackCommitTime ?? new Date(0),
+  manifest: undefined,
+  updateId: undefined,
+});
+
 // Default useUpdates() state
 export const defaultUseUpdatesState: UseUpdatesStateType = {
   isChecking: false,
@@ -60,9 +69,13 @@ export const reduceUpdatesStateFromContext: (
 ) => UseUpdatesStateType = (updatesState, context) => {
   const availableUpdate = context?.latestManifest
     ? updateFromManifest(context?.latestManifest)
+    : context.isRollback
+    ? updateFromRollback(context.rollbackCommitTime)
     : undefined;
   const downloadedUpdate = context?.downloadedManifest
     ? updateFromManifest(context?.downloadedManifest)
+    : context.isRollback
+    ? updateFromRollback(context.rollbackCommitTime)
     : undefined;
   return {
     ...updatesState,

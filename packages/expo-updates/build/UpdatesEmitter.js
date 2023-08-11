@@ -11,6 +11,9 @@ function _getEmitter() {
 }
 // Reemits native UpdateEvents sent during the startup update check
 function _emitEvent(params) {
+    if (!_emitter) {
+        throw new Error(`EventEmitter must be initialized to use from its listener`);
+    }
     let newParams = { ...params };
     if (typeof params === 'string') {
         newParams = JSON.parse(params);
@@ -19,13 +22,13 @@ function _emitEvent(params) {
         newParams.manifest = JSON.parse(newParams.manifestString);
         delete newParams.manifestString;
     }
-    if (!_emitter) {
-        throw new Error(`EventEmitter must be initialized to use from its listener`);
-    }
     _emitter.emit('Expo.updatesEvent', newParams);
 }
 // Reemits native state change events
 function _emitNativeStateChangeEvent(params) {
+    if (!_emitter) {
+        throw new Error(`EventEmitter must be initialized to use from its listener`);
+    }
     let newParams = { ...params };
     if (typeof params === 'string') {
         newParams = JSON.parse(params);
@@ -42,10 +45,11 @@ function _emitNativeStateChangeEvent(params) {
         newParams.context.lastCheckForUpdateTime = new Date(newParams.context.lastCheckForUpdateTimeString);
         delete newParams.context.lastCheckForUpdateTimeString;
     }
-    if (!_emitter) {
-        throw new Error(`EventEmitter must be initialized to use from its listener`);
+    if (newParams.context.rollbackCommitTimeString) {
+        newParams.context.rollbackCommitTime = new Date(newParams.context.rollbackCommitTimeString);
+        delete newParams.context.rollbackCommitTimeString;
     }
-    _emitter?.emit('Expo.updatesStateChangeEvent', newParams);
+    _emitter.emit('Expo.updatesStateChangeEvent', newParams);
 }
 /**
  * Adds a callback to be invoked when updates-related events occur (such as upon the initial app

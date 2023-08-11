@@ -19,6 +19,9 @@ function _getEmitter(): EventEmitter {
 
 // Reemits native UpdateEvents sent during the startup update check
 function _emitEvent(params): void {
+  if (!_emitter) {
+    throw new Error(`EventEmitter must be initialized to use from its listener`);
+  }
   let newParams = { ...params };
   if (typeof params === 'string') {
     newParams = JSON.parse(params);
@@ -27,15 +30,14 @@ function _emitEvent(params): void {
     newParams.manifest = JSON.parse(newParams.manifestString);
     delete newParams.manifestString;
   }
-
-  if (!_emitter) {
-    throw new Error(`EventEmitter must be initialized to use from its listener`);
-  }
   _emitter.emit('Expo.updatesEvent', newParams);
 }
 
 // Reemits native state change events
 function _emitNativeStateChangeEvent(params: any) {
+  if (!_emitter) {
+    throw new Error(`EventEmitter must be initialized to use from its listener`);
+  }
   let newParams = { ...params };
   if (typeof params === 'string') {
     newParams = JSON.parse(params);
@@ -54,10 +56,11 @@ function _emitNativeStateChangeEvent(params: any) {
     );
     delete newParams.context.lastCheckForUpdateTimeString;
   }
-  if (!_emitter) {
-    throw new Error(`EventEmitter must be initialized to use from its listener`);
+  if (newParams.context.rollbackCommitTimeString) {
+    newParams.context.rollbackCommitTime = new Date(newParams.context.rollbackCommitTimeString);
+    delete newParams.context.rollbackCommitTimeString;
   }
-  _emitter?.emit('Expo.updatesStateChangeEvent', newParams);
+  _emitter.emit('Expo.updatesStateChangeEvent', newParams);
 }
 
 /**

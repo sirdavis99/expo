@@ -286,6 +286,7 @@ export type UpdatesNativeStateMachineContext = {
   checkError?: Error;
   downloadError?: Error;
   lastCheckForUpdateTime?: Date;
+  rollbackCommitTime?: Date;
 };
 
 /**

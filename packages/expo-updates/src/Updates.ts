@@ -311,5 +311,9 @@ export async function getNativeStateMachineContextAsync(): Promise<UpdatesNative
     nativeContext.lastCheckForUpdateTime = new Date(nativeContext.lastCheckForUpdateTimeString);
     delete nativeContext.lastCheckForUpdateTimeString;
   }
+  if (nativeContext.rollbackCommitTimeString) {
+    nativeContext.rollbackCommitTime = new Date(nativeContext.rollbackCommitTimeString);
+    delete nativeContext.rollbackCommitTimeString;
+  }
   return nativeContext;
 }
