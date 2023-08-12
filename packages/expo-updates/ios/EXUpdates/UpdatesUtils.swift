@@ -113,7 +113,11 @@ public final class UpdatesUtils: NSObject {
             block([
               "isRollBackToEmbedded": true
             ])
-            sendStateEvent(UpdatesStateEventCheckCompleteWithRollback())
+            sendStateEvent(
+              UpdatesStateEventCheckCompleteWithRollback(
+                rollbackCommitTime: RollBackToEmbeddedUpdateDirective.rollbackCommitTime(updateDirective)
+              )
+            )
             return
           default:
             return handleCheckError(UpdatesUnsupportedDirectiveException(), block: block)
@@ -221,7 +225,11 @@ public final class UpdatesUtils: NSObject {
               "isNew": false,
               "isRollBackToEmbedded": true
             ])
-            sendStateEvent(UpdatesStateEventDownloadCompleteWithRollback())
+            sendStateEvent(
+              UpdatesStateEventDownloadCompleteWithRollback(
+                rollbackCommitTime: RollBackToEmbeddedUpdateDirective.rollbackCommitTime(updateResponse?.directiveUpdateResponsePart?.updateDirective)
+              )
+            )
             return
           } else {
             if let update = updateToLaunch {

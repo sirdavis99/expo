@@ -51,6 +51,7 @@ internal protocol UpdatesStateEvent {
   var manifest: [String: Any]? { get }
   var message: String? { get }
   var isRollback: Bool { get }
+  var rollbackCommitTime: Date? { get }
   var error: [String: String]? { get }
 }
 
@@ -59,6 +60,7 @@ internal struct UpdatesStateEventCheck: UpdatesStateEvent {
   let manifest: [String: Any]? = nil
   let message: String? = nil
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   let error: [String: String]? = nil
 }
 
@@ -67,6 +69,7 @@ internal struct UpdatesStateEventDownload: UpdatesStateEvent {
   let manifest: [String: Any]? = nil
   let message: String? = nil
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   let error: [String: String]? = nil
 }
 
@@ -75,6 +78,7 @@ internal struct UpdatesStateEventRestart: UpdatesStateEvent {
   let manifest: [String: Any]? = nil
   let message: String? = nil
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   let error: [String: String]? = nil
 }
 
@@ -83,6 +87,7 @@ internal struct UpdatesStateEventCheckError: UpdatesStateEvent {
   let manifest: [String: Any]? = nil
   let message: String?
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   var error: [String: String]? {
     return (message != nil) ? ["message": message ?? ""] : nil
   }
@@ -93,6 +98,7 @@ internal struct UpdatesStateEventDownloadError: UpdatesStateEvent {
   let manifest: [String: Any]? = nil
   let message: String?
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   var error: [String: String]? {
     return (message != nil) ? ["message": message ?? ""] : nil
   }
@@ -103,6 +109,7 @@ internal struct UpdatesStateEventCheckCompleteWithUpdate: UpdatesStateEvent {
   let manifest: [String: Any]?
   let message: String? = nil
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   let error: [String: String]? = nil
 }
 
@@ -111,6 +118,7 @@ internal struct UpdatesStateEventCheckCompleteWithRollback: UpdatesStateEvent {
   let manifest: [String: Any]? = nil
   let message: String? = nil
   let isRollback: Bool = true
+  let rollbackCommitTime: Date?
   let error: [String: String]? = nil
 }
 
@@ -119,6 +127,7 @@ internal struct UpdatesStateEventCheckComplete: UpdatesStateEvent {
   let manifest: [String: Any]? = nil
   let message: String? = nil
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   let error: [String: String]? = nil
 }
 
@@ -127,6 +136,7 @@ internal struct UpdatesStateEventDownloadCompleteWithUpdate: UpdatesStateEvent {
   let manifest: [String: Any]?
   let message: String? = nil
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   let error: [String: String]? = nil
 }
 
@@ -135,6 +145,7 @@ internal struct UpdatesStateEventDownloadCompleteWithRollback: UpdatesStateEvent
   let manifest: [String: Any]? = nil
   let message: String? = nil
   let isRollback: Bool = true
+  let rollbackCommitTime: Date?
   let error: [String: String]? = nil
 }
 
@@ -143,6 +154,7 @@ internal struct UpdatesStateEventDownloadComplete: UpdatesStateEvent {
   let manifest: [String: Any]? = nil
   let message: String? = nil
   let isRollback: Bool = false
+  let rollbackCommitTime: Date? = nil
   let error: [String: String]? = nil
 }
 
@@ -166,12 +178,20 @@ internal struct UpdatesStateContext {
   let checkError: [String: String]?
   let downloadError: [String: String]?
   let lastCheckForUpdateTime: Date?
+  let rollbackCommitTime: Date?
 
   private var lastCheckForUpdateTimeDateString: String? {
     guard let lastCheckForUpdateTime = lastCheckForUpdateTime else {
       return nil
     }
     return iso8601DateFormatter.string(from: lastCheckForUpdateTime)
+  }
+
+  private var rollbackCommitTimeString: String? {
+    guard let rollbackCommitTime = rollbackCommitTime else {
+      return nil
+    }
+    return iso8601DateFormatter.string(from: rollbackCommitTime)
   }
 
   var json: [String: Any?] {
@@ -186,7 +206,8 @@ internal struct UpdatesStateContext {
       "downloadedManifest": self.downloadedManifest,
       "checkError": self.checkError,
       "downloadError": self.downloadError,
-      "lastCheckForUpdateTimeString": lastCheckForUpdateTimeDateString
+      "lastCheckForUpdateTimeString": lastCheckForUpdateTimeDateString,
+      "rollbackCommitTimeString": rollbackCommitTimeString
     ] as [String: Any?]
   }
 }
@@ -204,6 +225,7 @@ extension UpdatesStateContext {
     self.checkError = nil
     self.downloadError = nil
     self.lastCheckForUpdateTime = nil
+    self.rollbackCommitTime = nil
   }
 
   // struct copy, lets you overwrite specific variables retaining the value of the rest
@@ -226,6 +248,7 @@ extension UpdatesStateContext {
     var checkError: [String: String]?
     var downloadError: [String: String]?
     var lastCheckForUpdateTime: Date?
+    var rollbackCommitTime: Date?
 
     fileprivate init(original: UpdatesStateContext) {
       self.isUpdateAvailable = original.isUpdateAvailable
@@ -239,6 +262,7 @@ extension UpdatesStateContext {
       self.checkError = original.checkError
       self.downloadError = original.downloadError
       self.lastCheckForUpdateTime = original.lastCheckForUpdateTime
+      self.rollbackCommitTime = original.rollbackCommitTime
     }
 
     fileprivate func toContext() -> UpdatesStateContext {
@@ -253,7 +277,8 @@ extension UpdatesStateContext {
         downloadedManifest: downloadedManifest,
         checkError: checkError,
         downloadError: downloadError,
-        lastCheckForUpdateTime: lastCheckForUpdateTime
+        lastCheckForUpdateTime: lastCheckForUpdateTime,
+        rollbackCommitTime: rollbackCommitTime
       )
     }
   }
@@ -353,6 +378,7 @@ internal class UpdatesStateMachine {
         $0.isUpdateAvailable = false
         $0.isRollback = false
         $0.lastCheckForUpdateTime = Date()
+        $0.rollbackCommitTime = nil
       }
     case .checkCompleteAvailable:
       return context.copy {
@@ -362,6 +388,7 @@ internal class UpdatesStateMachine {
         $0.isRollback = event.isRollback
         $0.isUpdateAvailable = true
         $0.lastCheckForUpdateTime = Date()
+        $0.rollbackCommitTime = event.rollbackCommitTime
       }
     case .checkError:
       return context.copy {
