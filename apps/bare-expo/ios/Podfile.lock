@@ -11,8 +11,6 @@ PODS:
   - EXAV (13.5.1):
     - ExpoModulesCore
     - ReactCommon/turbomodule/core
-  - EXBackgroundFetch (11.4.0):
-    - ExpoModulesCore
   - EXBarCodeScanner (12.6.1):
     - EXImageLoader
     - ExpoModulesCore
@@ -142,6 +140,8 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - ExpoAppleAuthentication (6.1.1):
+    - ExpoModulesCore
+  - ExpoBackgroundFetch (11.4.0):
     - ExpoModulesCore
   - ExpoBattery (7.4.0):
     - ExpoModulesCore
@@ -818,7 +818,6 @@ DEPENDENCIES:
   - EASClient/Tests (from `../../../packages/expo-eas-client/ios`)
   - EXApplication (from `../../../packages/expo-application/ios`)
   - EXAV (from `../../../packages/expo-av/ios`)
-  - EXBackgroundFetch (from `../../../packages/expo-background-fetch/ios`)
   - EXBarCodeScanner (from `../../../packages/expo-barcode-scanner/ios`)
   - EXCalendar (from `../../../packages/expo-calendar/ios`)
   - EXCamera (from `../../../packages/expo-camera/ios`)
@@ -847,6 +846,7 @@ DEPENDENCIES:
   - expo-dev-menu/Tests (from `../../../packages/expo-dev-menu`)
   - expo-dev-menu/UITests (from `../../../packages/expo-dev-menu`)
   - ExpoAppleAuthentication (from `../../../packages/expo-apple-authentication/ios`)
+  - ExpoBackgroundFetch (from `../../../packages/expo-background-fetch/ios`)
   - ExpoBattery (from `../../../packages/expo-battery/ios`)
   - ExpoBlur (from `../../../packages/expo-blur/ios`)
   - ExpoBrightness (from `../../../packages/expo-brightness/ios`)
@@ -984,9 +984,6 @@ EXTERNAL SOURCES:
   EXAV:
     inhibit_warnings: false
     :path: "../../../packages/expo-av/ios"
-  EXBackgroundFetch:
-    inhibit_warnings: false
-    :path: "../../../packages/expo-background-fetch/ios"
   EXBarCodeScanner:
     inhibit_warnings: false
     :path: "../../../packages/expo-barcode-scanner/ios"
@@ -1049,6 +1046,9 @@ EXTERNAL SOURCES:
   ExpoAppleAuthentication:
     inhibit_warnings: false
     :path: "../../../packages/expo-apple-authentication/ios"
+  ExpoBackgroundFetch:
+    inhibit_warnings: false
+    :path: "../../../packages/expo-background-fetch/ios"
   ExpoBattery:
     inhibit_warnings: false
     :path: "../../../packages/expo-battery/ios"
@@ -1293,7 +1293,6 @@ SPEC CHECKSUMS:
   EASClient: 99c4910f3aae38d2b1c05c4c8fab09bc0610835e
   EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
   EXAV: f48659990f6f3d00b5a7c31e3b73cdcc01373c80
-  EXBackgroundFetch: d08b7bfc4df14755b8850183f1a3331052e23848
   EXBarCodeScanner: 31350bf37e191366075b8748e7c04fc8da6dbba3
   EXCalendar: a8ca7ecf349595823d5f226972ba61a52ce2d235
   EXCamera: a78e115ec222af91598c1acef238db0695bb4897
@@ -1315,6 +1314,7 @@ SPEC CHECKSUMS:
   expo-dev-menu: 9b1704f9e7a2617c344e243e45736f99b0f1bd32
   expo-dev-menu-interface: bda969497e73dadc2663c479e0fa726ca79a306e
   ExpoAppleAuthentication: dfa28c11b04bc143875b77b90b47dd9ff0571426
+  ExpoBackgroundFetch: 8093b470c9ebe4fc0ce59b0213da44a7eea2eb21
   ExpoBattery: cdf132b55833403fa3f7afea97e8834c69721933
   ExpoBlur: ec73da4487ee1c99eb07dfa2982c1b76c2723dd2
   ExpoBrightness: e43d18935e507f1c24ed654d366dfe41603ba66d
