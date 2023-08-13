@@ -2190,8 +2190,6 @@ PODS:
   - EXAV (13.5.1):
     - ExpoModulesCore
     - ReactCommon/turbomodule/core
-  - EXBackgroundFetch (11.4.0):
-    - ExpoModulesCore
   - EXBarCodeScanner (12.6.1):
     - EXImageLoader
     - ExpoModulesCore
@@ -2239,6 +2237,8 @@ PODS:
   - Expo (50.0.0-alpha.1):
     - ExpoModulesCore
   - ExpoAppleAuthentication (6.1.1):
+    - ExpoModulesCore
+  - ExpoBackgroundFetch (11.4.0):
     - ExpoModulesCore
   - ExpoBattery (7.4.0):
     - ExpoModulesCore
@@ -3452,7 +3452,6 @@ DEPENDENCIES:
   - EASClient/Tests (from `../packages/expo-eas-client/ios`)
   - EXApplication (from `../packages/expo-application/ios`)
   - EXAV (from `../packages/expo-av/ios`)
-  - EXBackgroundFetch (from `../packages/expo-background-fetch/ios`)
   - EXBarCodeScanner (from `../packages/expo-barcode-scanner/ios`)
   - EXBranch (from `../packages/expo-branch/ios`)
   - EXCalendar (from `../packages/expo-calendar/ios`)
@@ -3473,6 +3472,7 @@ DEPENDENCIES:
   - EXPermissions (from `../packages/expo-permissions/ios`)
   - Expo (from `../packages/expo`)
   - ExpoAppleAuthentication (from `../packages/expo-apple-authentication/ios`)
+  - ExpoBackgroundFetch (from `../packages/expo-background-fetch/ios`)
   - ExpoBattery (from `../packages/expo-battery/ios`)
   - ExpoBlur (from `../packages/expo-blur/ios`)
   - ExpoBrightness (from `../packages/expo-brightness/ios`)
@@ -4321,8 +4321,6 @@ EXTERNAL SOURCES:
     :path: "../packages/expo-application/ios"
   EXAV:
     :path: "../packages/expo-av/ios"
-  EXBackgroundFetch:
-    :path: "../packages/expo-background-fetch/ios"
   EXBarCodeScanner:
     :path: "../packages/expo-barcode-scanner/ios"
   EXBranch:
@@ -4357,6 +4355,8 @@ EXTERNAL SOURCES:
     :path: "../packages/expo"
   ExpoAppleAuthentication:
     :path: "../packages/expo-apple-authentication/ios"
+  ExpoBackgroundFetch:
+    :path: "../packages/expo-background-fetch/ios"
   ExpoBattery:
     :path: "../packages/expo-battery/ios"
   ExpoBlur:
@@ -4908,7 +4908,6 @@ SPEC CHECKSUMS:
   EASClient: 99c4910f3aae38d2b1c05c4c8fab09bc0610835e
   EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
   EXAV: f48659990f6f3d00b5a7c31e3b73cdcc01373c80
-  EXBackgroundFetch: d08b7bfc4df14755b8850183f1a3331052e23848
   EXBarCodeScanner: 31350bf37e191366075b8748e7c04fc8da6dbba3
   EXBranch: dd82b2c5ad6d901625b861753ceb0a6c915c3f23
   EXCalendar: a8ca7ecf349595823d5f226972ba61a52ce2d235
@@ -4926,6 +4925,7 @@ SPEC CHECKSUMS:
   EXPermissions: f7d79d0fbbd125e6a402fa77119d2a152e54d318
   Expo: 10254ab447c31ce6c1973240451be7f4a09955fc
   ExpoAppleAuthentication: dfa28c11b04bc143875b77b90b47dd9ff0571426
+  ExpoBackgroundFetch: 8093b470c9ebe4fc0ce59b0213da44a7eea2eb21
   ExpoBattery: cdf132b55833403fa3f7afea97e8834c69721933
   ExpoBlur: ec73da4487ee1c99eb07dfa2982c1b76c2723dd2
   ExpoBrightness: e43d18935e507f1c24ed654d366dfe41603ba66d
