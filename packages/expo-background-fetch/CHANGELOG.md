@@ -10,6 +10,8 @@
 
 ### 💡 Others
 
+- Migrate to Expo Modules API. ([#23936](https://github.com/expo/expo/pull/23936) by [@alanjhughes](https://github.com/alanjhughes))
+
 ## 11.4.0 — 2023-08-02
 
 _This version does not introduce any user-facing changes._
